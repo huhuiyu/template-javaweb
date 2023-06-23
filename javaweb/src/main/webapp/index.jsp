@@ -31,6 +31,8 @@
     <hr />
     <a href="json.action">json数据</a>
     <hr />
+    <a href="user.action">用户信息</a>
+    <hr />
 
   </body>
 
