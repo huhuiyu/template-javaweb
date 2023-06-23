@@ -13,7 +13,7 @@ import java.util.List;
 public class SqlTest {
 
   private static final Logger logger = LoggerFactory.getLogger(SqlTest.class);
-
+  private static final TbUserDAO TB_USER_DAO = new TbUserDAO();
   @Test
   public void connection() throws Exception {
     Connection connection = DBHelp.getConnection();
@@ -23,7 +23,20 @@ public class SqlTest {
 
   @Test
   public void query() throws Exception {
-    List<TbUser> list = new TbUserDAO().query();
-    logger.info("查询结果{}", list);
+    List<TbUser> list = TB_USER_DAO.query(null);
+    logger.info("查询结果1：{}", list);
+    TbUser user = new TbUser();
+    user.setUsername("a");
+    list = TB_USER_DAO.query(user);
+    logger.info("查询结果2：{}", list);
+    user = new TbUser();
+    user.setEnable("y");
+    list = TB_USER_DAO.query(user);
+    logger.info("查询结果3{}", list);
+    user = new TbUser();
+    user.setUsername("a");
+    user.setEnable("n");
+    list = TB_USER_DAO.query(user);
+    logger.info("查询结果4{}", list);
   }
 }

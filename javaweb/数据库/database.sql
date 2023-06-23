@@ -19,5 +19,6 @@ create table tb_user
 
 insert into tb_user(username,password,nickname) values('admin','admin','内置管理员');
 insert into tb_user(username,password,nickname) values('user','user','内置用户');
+insert into tb_user(username,password,nickname,enable) values('test','test','测试用户','n');
 
 select * from tb_user;

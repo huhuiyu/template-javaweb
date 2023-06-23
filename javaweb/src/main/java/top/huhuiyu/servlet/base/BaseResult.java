@@ -2,13 +2,19 @@ package top.huhuiyu.servlet.base;
 
 import java.io.Serializable;
 
+/**
+ * 基础应答对象
+ *
+ * @param <T> 应答结果中的数据类型
+ * @author 胡辉煜
+ */
 public class BaseResult<T> implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
-  private int code=500;
-  private boolean success=false;
-  private String message="";
+  private int code = 500;
+  private boolean success = false;
+  private String message = "";
 
   private T data;
 

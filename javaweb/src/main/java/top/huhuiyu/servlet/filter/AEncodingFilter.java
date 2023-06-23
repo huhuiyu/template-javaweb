@@ -9,6 +9,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * 处理编码的过滤器
+ *
+ * @author 胡辉煜
+ */
 @WebFilter(filterName = "AEncodingFilter", urlPatterns = "/*")
 public class AEncodingFilter implements Filter {
 

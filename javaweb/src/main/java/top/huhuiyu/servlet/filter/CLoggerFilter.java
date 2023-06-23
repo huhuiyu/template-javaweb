@@ -10,6 +10,11 @@ import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Map;
 
+/**
+ * 日志信息过滤器
+ *
+ * @author 胡辉煜
+ */
 @WebFilter(filterName = "CLoggerFilter", urlPatterns = "/*")
 public class CLoggerFilter implements Filter {
   public static final String JOIN = ",";

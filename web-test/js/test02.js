@@ -1,10 +1,11 @@
 import { ajax } from './ajax.js';
 
-ajax.setBaseUrl('http://127.0.0.1:10100');
+ajax.setBaseUrl('http://127.0.0.1:8080/javaweb');
 
 //#region 查询演示
 
-let txtDeptName = document.getElementById('txtDeptName');
+let txtUserName = document.getElementById('txtUserName');
+let selEnable = document.getElementById('selEnable');
 let btnQuery = document.getElementById('btnQuery');
 let preResult = document.getElementById('preResult');
 
@@ -12,9 +13,10 @@ btnQuery.addEventListener('click', query);
 
 function query() {
   ajax.get(
-    '/dept/queryAll',
+    '/user/query.servlet',
     {
-      deptName: txtDeptName.value,
+      username: txtUserName.value,
+      enable: selEnable.value,
     },
     (data) => {
       preResult.innerHTML = JSON.stringify(data, null, 2);
@@ -26,17 +28,19 @@ function query() {
 
 //#region 添加演示，json格式参数
 
-let txtADeptName = document.getElementById('txtADeptName');
-let txtADeptInfo = document.getElementById('txtADeptInfo');
+let txtAUsername = document.getElementById('txtAUsername');
+let txtAPwd = document.getElementById('txtAPwd');
+let txtANickname = document.getElementById('txtANickname');
 let btnAdd = document.getElementById('btnAdd');
 let preInfo = document.getElementById('preInfo');
 
 btnAdd.addEventListener('click', () => {
-  ajax.postJson(
-    '/dept/add',
+  ajax.post(
+    '/user/add.servlet',
     {
-      deptName: txtADeptName.value,
-      deptInfo: txtADeptInfo.value,
+      username: txtAUsername.value,
+      password: txtAPwd.value,
+      nickname: txtANickname.value,
     },
     (data) => {
       preInfo.innerHTML = JSON.stringify(data, null, 2);
@@ -45,18 +49,3 @@ btnAdd.addEventListener('click', () => {
 });
 
 //#endregion
-
-//#region 删除演示，地址栏参数
-
-let txtDeptId = document.getElementById('txtDeptId');
-let btnDel = document.getElementById('btnDel');
-
-btnDel.addEventListener('click', () => {
-  ajax.delete(`/dept/delete/${txtDeptId.value}`, (data) => {
-    preInfo.innerHTML = JSON.stringify(data, null, 2);
-  });
-});
-
-//#endregion
-
-// query()

@@ -10,21 +10,22 @@
 
 <body>
 
-  <input type="text" id="txtDeptName" placeholder="部门名称模糊查询">
+  <input type="text" id="txtUserName" placeholder="部门名称模糊查询">
+  <select id="selEnable">
+    <option value="">请选择</option>
+    <option value="y">启用</option>
+    <option value="n">禁用</option>
+  </select>
   <button id="btnQuery">查询</button>
 
   <pre id="preResult"></pre>
 
   <hr>
 
-  <input type="text" id="txtADeptName" placeholder="部门名称">
-  <input type="text" id="txtADeptInfo" placeholder="部门描述">
-  <button id="btnAdd">添加</button>
-
-  <hr>
-
-  <input type="text" id="txtDeptId" placeholder="要删除的部门编号">
-  <button id="btnDel">删除</button>
+  <input type="text" id="txtAUsername" placeholder="登录名">
+  <input type="password" id="txtAPwd" placeholder="密码">
+  <input type="text" id="txtANickname" placeholder="用户名">
+  <button id="btnAdd">注册</button>
 
   <hr>
 

@@ -8,6 +8,11 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * 处理跨域的过滤器
+ *
+ * @author 胡辉煜
+ */
 @WebFilter(filterName = "BCrossDomainFilter", urlPatterns = "/*")
 public class BCrossDomainFilter implements Filter {
   private static Logger logger = LoggerFactory.getLogger(BCrossDomainFilter.class);

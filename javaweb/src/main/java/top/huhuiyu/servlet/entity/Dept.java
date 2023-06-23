@@ -3,6 +3,9 @@ package top.huhuiyu.servlet.entity;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * 演示用对象
+ */
 public class Dept implements Serializable {
   private static final long serialVersionUID = 1L;
 

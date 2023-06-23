@@ -4,6 +4,11 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+/**
+ * json处理工具类
+ *
+ * @author 胡辉煜
+ */
 public class JsonUtil {
   private static final ObjectMapper MAPPER = new ObjectMapper();
 

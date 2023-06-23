@@ -7,6 +7,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * 基本演示用servlet
+ *
+ * @author 胡辉煜
+ */
 @WebServlet(name = "DemoServlet", urlPatterns = "/demo.do")
 public class DemoServlet extends HttpServlet {
 

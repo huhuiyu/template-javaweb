@@ -5,6 +5,11 @@ import top.huhuiyu.servlet.util.JsonUtil;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * tb_user表对应的实体类
+ *
+ * @author 胡辉煜
+ */
 public class TbUser implements Serializable {
   private static final long serialVersionUID = 1L;
 

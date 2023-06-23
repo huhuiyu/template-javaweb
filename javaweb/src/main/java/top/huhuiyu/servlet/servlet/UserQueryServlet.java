@@ -1,7 +1,9 @@
 package top.huhuiyu.servlet.servlet;
 
 import top.huhuiyu.servlet.base.BaseResult;
-import top.huhuiyu.servlet.entity.Dept;
+import top.huhuiyu.servlet.dao.TbUserDAO;
+import top.huhuiyu.servlet.entity.TbUser;
+import top.huhuiyu.servlet.util.BeanTools;
 import top.huhuiyu.servlet.util.JsonUtil;
 
 import javax.servlet.ServletException;
@@ -10,16 +12,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
- * json应答演示servlet
+ * json应答的用户查询servlet
  */
-@WebServlet(name = "JsonServlet", urlPatterns = "/json.action")
-public class JsonServlet extends HttpServlet {
+@WebServlet(name = "UserQueryServlet", urlPatterns = "/user/query.servlet")
+public class UserQueryServlet extends HttpServlet {
   private static final long serialVersionUID = 1L;
+  private static final TbUserDAO TB_USER_DAO = new TbUserDAO();
 
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -29,15 +30,18 @@ public class JsonServlet extends HttpServlet {
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     resp.setContentType("text/plain");
-    BaseResult<List<Dept>> result = new BaseResult<>();
-    result.setCode(200);
-    result.setSuccess(true);
-    result.setData(new ArrayList<Dept>());
-    for (int i = 100; i < 105; i++) {
-      Dept dept = new Dept(i, "部门" + i, "部门描述" + i, new Date());
-      result.getData().add(dept);
-    }
     try {
+      // 处理查询参数
+      TbUser user = BeanTools.mapping(req.getParameterMap(), TbUser.class);
+//    上面的代码时用来替换下面被注释的代码
+//    TbUser user = new TbUser();
+//    user.setUsername(req.getParameter("username"));
+//    user.setEnable(req.getParameter("enable"));
+      // 查询处理
+      BaseResult<List<TbUser>> result = new BaseResult<>();
+      result.setCode(200);
+      result.setSuccess(true);
+      result.setData(TB_USER_DAO.query(user));
       resp.getWriter().println(JsonUtil.stringify(result));
     } catch (Exception e) {
       throw new ServletException(e);
