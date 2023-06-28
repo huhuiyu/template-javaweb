@@ -43,6 +43,7 @@ public class LogoutServlet extends HttpServlet {
       token.setTokenInfo(JsonUtil.stringify(tokenInfo));
       result.setCode(200);
       result.setSuccess(true);
+      result.setToken(token.getToken());
       result.setMessage("安全退出成功");
       resp.getWriter().println(JsonUtil.stringify(result));
     } catch (Exception e) {

@@ -36,9 +36,12 @@ public class LoginServlet extends HttpServlet {
   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     resp.setContentType("text/plain");
     try {
+      TbToken token = DTokenFilter.getTokenInfo(req);
       // 处理查询参数
       TbUser user = BeanTools.mapping(req.getParameterMap(), TbUser.class);
+      // 应答token
       BaseResult<TbUser> result = new BaseResult<>();
+      result.setToken(token.getToken());
       // 查询用户名是否存在
       TbUser check = tbUserDAO.queryByUsername(user);
       if (check == null) {
@@ -57,7 +60,6 @@ public class LoginServlet extends HttpServlet {
         return;
       }
       // 更新token中的用户信息
-      TbToken token = DTokenFilter.getTokenInfo(req);
       TokenInfo tokenInfo = token.content();
       tokenInfo.setUser(check);
       token.setTokenInfo(JsonUtil.stringify(tokenInfo));

@@ -1,49 +1,41 @@
-import { ajax } from './ajax.js';
+import { server } from './server.js';
 
-ajax.setBaseUrl('http://127.0.0.1:8080/javaweb');
+let preInfo = document.getElementById('preInfo');
 
-//#region 查询演示
+//#region 获取用户和安全退出部分
 
-let txtUserName = document.getElementById('txtUserName');
-let selEnable = document.getElementById('selEnable');
-let btnQuery = document.getElementById('btnQuery');
-let preResult = document.getElementById('preResult');
+let btnUser = document.getElementById('btnUser');
+let btnLogout = document.getElementById('btnLogout');
 
-btnQuery.addEventListener('click', query);
+btnUser.addEventListener('click', () => {
+  server.post('/user/info.token', {}, (data) => {
+    preInfo.innerHTML = '用户信息：' + JSON.stringify(data);
+  });
+});
 
-function query() {
-  ajax.get(
-    '/user/query.servlet',
-    {
-      username: txtUserName.value,
-      enable: selEnable.value,
-    },
-    (data) => {
-      preResult.innerHTML = JSON.stringify(data, null, 2);
-    }
-  );
-}
+btnLogout.addEventListener('click', () => {
+  server.post('/user/logout.token', {}, (data) => {
+    preInfo.innerHTML = '用户安全退出信息：' + JSON.stringify(data);
+  });
+});
 
 //#endregion
 
-//#region 添加演示，json格式参数
+//#region 用户登录部分
 
-let txtAUsername = document.getElementById('txtAUsername');
-let txtAPwd = document.getElementById('txtAPwd');
-let txtANickname = document.getElementById('txtANickname');
-let btnAdd = document.getElementById('btnAdd');
-let preInfo = document.getElementById('preInfo');
+let txtUsername = document.getElementById('txtUsername');
+let txtPassword = document.getElementById('txtPassword');
+let btnLogin = document.getElementById('btnLogin');
 
-btnAdd.addEventListener('click', () => {
-  ajax.post(
-    '/user/add.servlet',
+btnLogin.addEventListener('click', () => {
+  server.post(
+    '/user/login.token',
     {
-      username: txtAUsername.value,
-      password: txtAPwd.value,
-      nickname: txtANickname.value,
+      username: txtUsername.value,
+      password: txtPassword.value,
     },
     (data) => {
-      preInfo.innerHTML = JSON.stringify(data, null, 2);
+      preInfo.innerHTML = '用户登录信息：' + JSON.stringify(data);
     }
   );
 });

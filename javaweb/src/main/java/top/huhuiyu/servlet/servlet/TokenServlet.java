@@ -1,5 +1,9 @@
 package top.huhuiyu.servlet.servlet;
 
+import top.huhuiyu.servlet.base.BaseResult;
+import top.huhuiyu.servlet.entity.TbToken;
+import top.huhuiyu.servlet.entity.TbUser;
+import top.huhuiyu.servlet.entity.TokenInfo;
 import top.huhuiyu.servlet.filter.DTokenFilter;
 import top.huhuiyu.servlet.util.JsonUtil;
 
@@ -15,7 +19,7 @@ import java.io.IOException;
  *
  * @author 胡辉煜
  */
-@WebServlet(name = "TokenServlet", urlPatterns = "/demo.token")
+@WebServlet(name = "TokenServlet", urlPatterns = "/user/info.token")
 public class TokenServlet extends HttpServlet {
 
   private static final long serialVersionUID = 1L;
@@ -29,7 +33,16 @@ public class TokenServlet extends HttpServlet {
   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     resp.setContentType("text/html");
     try {
-      resp.getWriter().println(JsonUtil.stringify(DTokenFilter.getTokenInfo(req)));
+      TbToken token = DTokenFilter.getTokenInfo(req);
+      // 应答token
+      BaseResult<TbUser> result = new BaseResult<>();
+      result.setToken(token.getToken());
+      TokenInfo tokenInfo = token.content();
+      TbUser user = tokenInfo.getUser();
+      result.setCode(user == null ? 500 : 200);
+      result.setSuccess(user != null);
+      result.setData(user);
+      resp.getWriter().println(JsonUtil.stringify(result));
     } catch (Exception e) {
       throw new ServletException(e);
     }

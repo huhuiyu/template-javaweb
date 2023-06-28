@@ -64,7 +64,7 @@ public class CLoggerFilter implements Filter {
       logger.debug("请求地址：{},客户端ip：{}", req.getRequestURI(), IpUtil.getIpAddr(req));
     } catch (Exception ex) {
     }
-    logger.debug("请求参数信息：");
+    logger.debug("请求参数信息：{}", params.size());
     for (String key : params.keySet()) {
       logger.debug("{}:{}", key, join(params.get(key)));
     }
@@ -72,8 +72,7 @@ public class CLoggerFilter implements Filter {
     Enumeration<String> heads = req.getHeaderNames();
     while (heads.hasMoreElements()) {
       String head = heads.nextElement();
-      if (head.startsWith("sec-") || head.startsWith("accept") || head.startsWith("upgrade-insecure") || head.startsWith("connection")
-          || head.startsWith("cache-control")) {
+      if (head.startsWith("sec-") || head.startsWith("accept") || head.startsWith("upgrade-insecure") || head.startsWith("connection") || head.startsWith("cache-control")) {
         continue;
       }
       logger.debug("{}:{}", head, req.getHeader(head));

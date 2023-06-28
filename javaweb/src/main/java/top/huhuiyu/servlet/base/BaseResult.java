@@ -15,7 +15,7 @@ public class BaseResult<T> implements Serializable {
   private int code = 500;
   private boolean success = false;
   private String message = "";
-
+  private String token = "";
   private T data;
 
   public BaseResult() {
@@ -51,5 +51,13 @@ public class BaseResult<T> implements Serializable {
 
   public void setData(T data) {
     this.data = data;
+  }
+
+  public String getToken() {
+    return token;
+  }
+
+  public void setToken(String token) {
+    this.token = token;
   }
 }
