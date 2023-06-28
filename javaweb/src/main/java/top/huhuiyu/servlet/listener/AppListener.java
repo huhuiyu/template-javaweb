@@ -2,6 +2,7 @@ package top.huhuiyu.servlet.listener;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import top.huhuiyu.servlet.schedule.TokenTask;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -15,15 +16,18 @@ import javax.servlet.annotation.WebListener;
 @WebListener("AppListener")
 public class AppListener implements ServletContextListener {
   private static Logger logger = LoggerFactory.getLogger(AppListener.class);
+  private TokenTask task = new TokenTask();
 
   @Override
   public void contextDestroyed(ServletContextEvent sce) {
     logger.info("应用程序销毁...");
+    task.shutdown();
   }
 
   @Override
   public void contextInitialized(ServletContextEvent sce) {
     logger.info("应用程序启动...");
+    task.startup();
   }
 
 }

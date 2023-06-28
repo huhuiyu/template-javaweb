@@ -1,6 +1,7 @@
 package top.huhuiyu.servlet.servlet;
 
 import top.huhuiyu.servlet.base.BaseResult;
+import top.huhuiyu.servlet.dao.TbTokenDAO;
 import top.huhuiyu.servlet.dao.TbUserDAO;
 import top.huhuiyu.servlet.entity.TbToken;
 import top.huhuiyu.servlet.entity.TbUser;
@@ -25,6 +26,7 @@ import java.io.IOException;
 public class LoginServlet extends HttpServlet {
 
   private TbUserDAO tbUserDAO = new TbUserDAO();
+  private TbTokenDAO tbTokenDAO = new TbTokenDAO();
   private static final long serialVersionUID = 1L;
 
   @Override
@@ -63,6 +65,7 @@ public class LoginServlet extends HttpServlet {
       TokenInfo tokenInfo = token.content();
       tokenInfo.setUser(check);
       token.setTokenInfo(JsonUtil.stringify(tokenInfo));
+      tbTokenDAO.update(token);
       result.setCode(200);
       result.setSuccess(true);
       result.setMessage("登录成功");

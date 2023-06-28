@@ -61,7 +61,7 @@ public class CLoggerFilter implements Filter {
     HttpServletRequest req = (HttpServletRequest) request;
     Map<String, String[]> params = req.getParameterMap();
     try {
-      logger.debug("请求地址：{},客户端ip：{}", req.getRequestURI(), IpUtil.getIpAddr(req));
+      logger.debug("请求地址：{},客户端ip：{},请求方式：{}", req.getRequestURI(), IpUtil.getIpAddr(req), req.getMethod());
     } catch (Exception ex) {
     }
     logger.debug("请求参数信息：{}", params.size());

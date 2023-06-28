@@ -21,7 +21,6 @@ import java.io.IOException;
  */
 @WebServlet(name = "TokenServlet", urlPatterns = "/user/info.token")
 public class TokenServlet extends HttpServlet {
-
   private static final long serialVersionUID = 1L;
 
   @Override

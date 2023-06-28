@@ -20,6 +20,7 @@ public class TbTokenDAO {
   public static final String SELECT_BY_TOKEN = "select * from tb_token where token = ?";
   public static final String INSERT = "insert into tb_token(token,token_info) values(?,?)";
   public static final String UPDATE = "update tb_token set token_info = ? where token = ?";
+  public static final String DELETE_EXPIRE_TOKEN = "delete from tb_token where timestampdiff(second,lastupdate,now()) > 180";
 
   /**
    * 查询token信息
@@ -52,19 +53,19 @@ public class TbTokenDAO {
    * @throws Exception 处理发生异常
    */
   public TbToken selectOrInsert(TbToken token) throws Exception {
-    Connection connection = DBHelp.getConnection();
     TbToken check = queryByToken(token.getToken());
-    PreparedStatement ps;
+    logger.debug("传入token：{}，查询结果：{}", token, check);
     if (check == null) {
+      Connection connection = DBHelp.getConnection();
       // token不存在的情况，新建token并保存到数据库
       token.setToken(UUID.randomUUID().toString());
       token.setTokenInfo("{}");
-      ps = connection.prepareStatement(INSERT);
+      PreparedStatement ps = connection.prepareStatement(INSERT);
       ps.setString(1, token.getToken());
       ps.setString(2, token.getTokenInfo());
       ps.executeUpdate();
+      connection.close();
     }
-    connection.close();
     return check == null ? token : check;
   }
 
@@ -81,5 +82,19 @@ public class TbTokenDAO {
     ps.setString(2, token.getToken());
     ps.executeUpdate();
     connection.close();
+  }
+
+  /**
+   * 删除过期的token
+   *
+   * @return 删除的token数量
+   * @throws Exception 处理发生异常
+   */
+  public int removeExpireToken() throws Exception {
+    Connection connection = DBHelp.getConnection();
+    PreparedStatement ps = connection.prepareStatement(DELETE_EXPIRE_TOKEN);
+    int count = ps.executeUpdate();
+    connection.close();
+    return count;
   }
 }

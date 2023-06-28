@@ -53,6 +53,7 @@ public class DTokenFilter implements Filter {
       TokenInfo tokenInfo = tbToken.content();
       tokenInfo.setIp(IpUtil.getIpAddr(req));
       tbToken.setTokenInfo(tokenInfo.toString());
+      tbTokenDAO.update(tbToken);
       // 将token信息放到请求中
       req.setAttribute(REQUEST_TOKEN_ATTRIBUTE, tbToken);
       logger.debug("处理后的token信息：{}", tbToken);
@@ -60,12 +61,6 @@ public class DTokenFilter implements Filter {
       throw new ServletException(e);
     }
     chain.doFilter(request, response);
-    try {
-      // 保存最新的token信息
-      tbTokenDAO.update(tbToken);
-    } catch (Exception e) {
-      throw new ServletException(e);
-    }
   }
 
   /**
