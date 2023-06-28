@@ -22,3 +22,15 @@ insert into tb_user(username,password,nickname) values('user','user','内置用�
 insert into tb_user(username,password,nickname,enable) values('test','test','测试用户','n');
 
 select * from tb_user;
+
+-- token信息=====================================================
+drop table if exists tb_token;
+
+create table tb_token
+(
+  token varchar(50) primary key not null comment '主键',
+  token_info varchar(1000) not null comment 'token信息，json格式',
+  lastupdate timestamp on update now() default now() not null comment 'token信息最后修改时间'
+)comment 'token信息表';
+
+select * from tb_token; 

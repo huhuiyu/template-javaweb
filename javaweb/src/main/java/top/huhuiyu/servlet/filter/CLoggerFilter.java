@@ -2,6 +2,7 @@ package top.huhuiyu.servlet.filter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import top.huhuiyu.servlet.util.IpUtil;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -59,7 +60,10 @@ public class CLoggerFilter implements Filter {
   public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
     HttpServletRequest req = (HttpServletRequest) request;
     Map<String, String[]> params = req.getParameterMap();
-    logger.debug("请求地址：{}", req.getRequestURI());
+    try {
+      logger.debug("请求地址：{},客户端ip：{}", req.getRequestURI(), IpUtil.getIpAddr(req));
+    } catch (Exception ex) {
+    }
     logger.debug("请求参数信息：");
     for (String key : params.keySet()) {
       logger.debug("{}:{}", key, join(params.get(key)));
@@ -68,6 +72,10 @@ public class CLoggerFilter implements Filter {
     Enumeration<String> heads = req.getHeaderNames();
     while (heads.hasMoreElements()) {
       String head = heads.nextElement();
+      if (head.startsWith("sec-") || head.startsWith("accept") || head.startsWith("upgrade-insecure") || head.startsWith("connection")
+          || head.startsWith("cache-control")) {
+        continue;
+      }
       logger.debug("{}:{}", head, req.getHeader(head));
     }
     chain.doFilter(request, response);
